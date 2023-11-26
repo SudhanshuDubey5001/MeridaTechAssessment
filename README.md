@@ -1,16 +1,8 @@
-# meridatech_assessment
+# MeridaTech Assessment
 
-A new Flutter project.
+A simple shopping app made using Flutter
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Details
+- **Shopping page**: Browse through the products and add it to cart.
+- **Cart page**: See your cart and manage the quantity and see total amount.
+- **Checkout page**: Mock checkout page. Just press "Proceed to payment" and it will wait 2 seconds and will show success message followed by resetting of cart and navigate to home page.
