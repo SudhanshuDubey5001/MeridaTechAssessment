@@ -8,7 +8,6 @@ class Controller {
   Controller._();
   factory Controller() => _instance ??= Controller._();
 
-
   DummyData _shopdata = DummyData();
   List<ShopItem> getdummyShoppingData() => _shopdata.items;
 
@@ -27,9 +26,6 @@ class Controller {
     if (!_cart.contains(item)) {
       item.quantity = 1;
       _cart.add(item);
-      print("Cart item added : "+item.itemName);
-    }else{
-      print("quantity = "+item.quantity.toString());
     }
     _totalItemCount++;
     _totalPriceOfAllItems += item.itemPrice;
@@ -54,7 +50,6 @@ class Controller {
   void resetValues(){
     _totalPriceOfAllItems = 0;
     _totalItemCount = 0;
-    _shopdata.items[0].quantity = 0;
     _cart.clear();
     _cart = [];
   }
