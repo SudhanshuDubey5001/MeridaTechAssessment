@@ -1,22 +1,27 @@
-import 'dart:developer';
-
 import 'package:meridatech_assessment/model/ShopItem.dart';
 import 'package:meridatech_assessment/utils/DummyData.dart';
 
 class Controller {
-  static DummyData _shopdata = DummyData();
-  static List<ShopItem> getdummyShoppingData() => _shopdata.items;
 
-  static int _totalItemCount = 0;
-  static get getTotalCartItemCount => _totalItemCount;
+  // make the class singleton
+  static Controller? _instance;
+  Controller._();
+  factory Controller() => _instance ??= Controller._();
 
-  static double _totalPriceOfAllItems = 0;
-  static double getTotalPriceOfAllItems() => _totalPriceOfAllItems;
 
-  static List<ShopItem> _cart = [];
-  static List<ShopItem> getCartItems() => _cart;
+  DummyData _shopdata = DummyData();
+  List<ShopItem> getdummyShoppingData() => _shopdata.items;
 
-  static void addItemToCart(ShopItem item) {
+  int _totalItemCount = 0;
+  get getTotalCartItemCount => _totalItemCount;
+
+  double _totalPriceOfAllItems = 0;
+  double getTotalPriceOfAllItems() => _totalPriceOfAllItems;
+
+  List<ShopItem> _cart = [];
+  List<ShopItem> getCartItems() => _cart;
+
+  void addItemToCart(ShopItem item) {
     item.quantity++;
     item.totalPriceOfItem = item.quantity * item.itemPrice;
     if (!_cart.contains(item)) {
@@ -30,7 +35,7 @@ class Controller {
     _totalPriceOfAllItems += item.itemPrice;
   }
 
-  static void removeItemFromCart(ShopItem item) {
+  void removeItemFromCart(ShopItem item) {
     if (item.quantity >= 0) item.quantity--;
     item.totalPriceOfItem = item.quantity * item.itemPrice;
     if (_totalPriceOfAllItems >= item.itemPrice) {
@@ -42,11 +47,11 @@ class Controller {
     if (_totalItemCount > 0) _totalItemCount--;
   }
 
-  static double totalPriceOfSingleItem(ShopItem item) {
+  double totalPriceOfSingleItem(ShopItem item) {
     return item.itemPrice * item.quantity;
   }
 
-  static void resetValues(){
+  void resetValues(){
     _totalPriceOfAllItems = 0;
     _totalItemCount = 0;
     _shopdata.items[0].quantity = 0;

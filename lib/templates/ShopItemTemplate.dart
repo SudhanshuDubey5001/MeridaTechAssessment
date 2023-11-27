@@ -33,8 +33,8 @@ class ShopItemTemplate extends StatelessWidget {
                     );
                   },
                 ),
+                ),
               ),
-            ),
             SizedBox(width: 20),
             Expanded(
               flex: 2,

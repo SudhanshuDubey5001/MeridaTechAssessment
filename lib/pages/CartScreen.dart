@@ -12,6 +12,9 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+
+  Controller controller = Controller();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +26,7 @@ class _CartScreenState extends State<CartScreen> {
         body: Stack(
           children: [
             Visibility(
-                visible: Controller.getCartItems().isEmpty,
+                visible: controller.getCartItems().isEmpty,
                 child: Container(
                   alignment: Alignment.center,
                   child: Image.asset('assets/empty_cart.png'),
@@ -34,18 +37,18 @@ class _CartScreenState extends State<CartScreen> {
                   padding: const EdgeInsets.only(bottom: 100),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: Controller.getCartItems().map((shopItem) {
+                      children: controller.getCartItems().map((shopItem) {
                         return Container(
                           child: CartItemTemplate(
                               shopItem: shopItem,
                               increment: () {
                                 setState(() {
-                                  Controller.addItemToCart(shopItem);
+                                  controller.addItemToCart(shopItem);
                                 });
                               },
                               decrement: () {
                                 setState(() {
-                                  Controller.removeItemFromCart(shopItem);
+                                  controller.removeItemFromCart(shopItem);
                                 });
                               }),
                         );
@@ -62,7 +65,7 @@ class _CartScreenState extends State<CartScreen> {
               style: ElevatedButton.styleFrom(
                   backgroundColor: Constants.primaryColor),
               onPressed: () {
-                if(Controller.getCartItems().isNotEmpty)
+                if(controller.getCartItems().isNotEmpty)
                   Navigator.pushNamed(context, Routes.checkout_screen);
                 else {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +88,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     Text(
-                      '₹ ${Controller.getTotalPriceOfAllItems().toStringAsFixed(2)}',
+                      '₹ ${controller.getTotalPriceOfAllItems().toStringAsFixed(2)}',
                       style: TextStyle(
                         fontSize: 20,
                       ),

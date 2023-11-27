@@ -13,6 +13,7 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
 
+  Controller controller = Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class _ShopScreenState extends State<ShopScreen> {
                   IconButton(
                     icon: Icon(Icons.shopping_cart),
                     onPressed: () {
-                      if(Controller.getCartItems().isNotEmpty) {
+                      if(controller.getCartItems().isNotEmpty) {
                         Navigator.pushNamed(context, Routes.cart_screen).then((value){
                           setState(() {});
                         });
@@ -51,7 +52,7 @@ class _ShopScreenState extends State<ShopScreen> {
                       backgroundColor: Constants.secondaryColor,
                       radius: 10,
                       child: Text(
-                        Controller.getCartItems().length.toString(),
+                        controller.getCartItems().length.toString(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -68,13 +69,13 @@ class _ShopScreenState extends State<ShopScreen> {
           child: SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: Controller.getdummyShoppingData().map((shopItem) {
+                children: controller.getdummyShoppingData().map((shopItem) {
                   return Container(
                     child: ShopItemTemplate(
                         shopItem: shopItem,
                         addToCartButton: () {
                           setState(() {
-                            Controller.addItemToCart(shopItem);
+                            controller.addItemToCart(shopItem);
                           });
                         }),
                   );

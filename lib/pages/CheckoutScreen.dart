@@ -12,6 +12,9 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
+
+  Controller controller = Controller();
+
   bool isProcessing = false;
 
   double taxAmount(double amount) {
@@ -30,9 +33,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double tax = taxAmount(Controller.getTotalPriceOfAllItems());
+    double tax = taxAmount(controller.getTotalPriceOfAllItems());
     double delivery = 80; //80 rupees delivery
-    double finalAmount = Controller.getTotalPriceOfAllItems() + tax + delivery;
+    double finalAmount = controller.getTotalPriceOfAllItems() + tax + delivery;
 
     return Scaffold(
       backgroundColor: isProcessing ? Colors.grey : Colors.white,
@@ -88,7 +91,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               fontWeight: FontWeight.bold,
                             )),
                         Text(
-                            '₹ ${Controller.getTotalPriceOfAllItems().toStringAsFixed(2)}',
+                            '₹ ${controller.getTotalPriceOfAllItems().toStringAsFixed(2)}',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

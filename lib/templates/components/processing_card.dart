@@ -24,7 +24,7 @@ class _ProcessingCardState extends State<ProcessingCard> {
           // now navigate to home page
           Future.delayed(const Duration(seconds: 1), () {
             if (mounted) {
-              Controller.resetValues();
+              Controller().resetValues();
               Navigator.pop(context);
               Navigator.pop(context);
             }
