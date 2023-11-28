@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:meridatech_assessment/templates/components/add_cart_button.dart';
-import 'package:meridatech_assessment/utils/Constants.dart';
+
 import '../model/ShopItem.dart';
+import '../utils/Constants.dart';
 
-class ShopItemTemplate extends StatelessWidget {
+class OrderHistoryTemplate extends StatefulWidget {
   final ShopItem shopItem;
-  final Function() addToCartButton;
 
-  ShopItemTemplate(
-      {super.key, required this.shopItem, required this.addToCartButton});
+  OrderHistoryTemplate(
+      {super.key, required this.shopItem});
 
+  @override
+  State<OrderHistoryTemplate> createState() => _OrderHistoryTemplateState();
+}
+
+class _OrderHistoryTemplateState extends State<OrderHistoryTemplate> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,7 +29,7 @@ class ShopItemTemplate extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  shopItem.imageURL,
+                  widget.shopItem.imageURL,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Image.asset(
@@ -34,8 +38,8 @@ class ShopItemTemplate extends StatelessWidget {
                     );
                   },
                 ),
-                ),
               ),
+            ),
             SizedBox(width: 20),
             Expanded(
               flex: 2,
@@ -44,7 +48,7 @@ class ShopItemTemplate extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    shopItem.itemName,
+                    widget.shopItem.itemName,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -52,7 +56,7 @@ class ShopItemTemplate extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '₹ ${shopItem.itemPrice}',
+                    '₹ ${widget.shopItem.itemPrice}',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -60,14 +64,21 @@ class ShopItemTemplate extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 16),
-                  AddCartButton(
-                      addToCartButton: addToCartButton)
+                  Text(
+                    'Quantity bought: ${widget.shopItem.quantity}',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Constants.secondaryColor,
+                    ),
+                  ),
+                  SizedBox(height: 16),
                 ],
               ),
             ),
           ],
         ),
       ),
-    );
+    );;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meridatech_assessment/Controller.dart';
+import 'package:meridatech_assessment/services/cloud_database.dart';
 import 'package:meridatech_assessment/templates/components/processing_card.dart';
 
 import '../utils/Constants.dart';
@@ -12,8 +13,8 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
-
   Controller controller = Controller();
+  DatabaseService db = DatabaseService();
 
   bool isProcessing = false;
 
@@ -44,6 +45,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         title: Text("Checkout"),
         centerTitle: true,
         backgroundColor: Constants.primaryColor,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -154,8 +156,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Constants.primaryColor),
-                  onPressed: () {
+                      backgroundColor: Constants.primaryColor,
+                      foregroundColor: Colors.white),
+                  onPressed: () async {
                     setState(() {
                       isProcessing = true;
                     });
@@ -174,8 +177,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             ),
             Visibility(
                 visible: isProcessing,
-                child: ProcessingCard(isProcessing: isProcessing)
-            )
+                child: ProcessingCard(isProcessing: isProcessing))
           ],
         ),
       ),

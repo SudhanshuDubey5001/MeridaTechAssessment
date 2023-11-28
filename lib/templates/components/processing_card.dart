@@ -1,42 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:meridatech_assessment/Controller.dart';
 
-class ProcessingCard extends StatefulWidget {
+import '../../services/cloud_database.dart';
+
+class ProcessingCard extends StatelessWidget {
   bool isProcessing;
 
   ProcessingCard({super.key, required this.isProcessing});
 
-  @override
-  State<ProcessingCard> createState() => _ProcessingCardState();
-}
-
-class _ProcessingCardState extends State<ProcessingCard> {
   String processingMsg = "Processing...";
-  bool success = false; //to change from spinner to green tick icon
 
-  void showSuccessMsg() {
+  bool success = false;
+
+  //to change from spinner to green tick icon
+  void updateOrderHistory(BuildContext context) async {
+    Controller controller = Controller();
+    DatabaseService db = DatabaseService();
+    dynamic result = await db.addItemsToOrderHistory(controller.getCartItems());
+    if (result != null && result == true) {
+      success = true;
+      processingMsg = "Successful";
+      controller.resetValues();
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
     // simulate transaction by just adding delay of 2 seconds
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() {
-          success = true;
-          processingMsg = "Successful";
-          // now navigate to home page
-          Future.delayed(const Duration(seconds: 1), () {
-            if (mounted) {
-              Controller().resetValues();
-              Navigator.pop(context);
-              Navigator.pop(context);
-            }
-          });
-        });
-      }
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   if (mounted) {
+    //     setState(() {
+    //       success = true;
+    //       processingMsg = "Successful";
+    //       // now navigate to home page
+    //       Future.delayed(const Duration(seconds: 1), () {
+    //         if (mounted) {
+    //           Controller().resetValues();
+    //           Navigator.pop(context);
+    //           Navigator.pop(context);
+    //         }
+    //       });
+    //     });
+    //   }
+    // }
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
-    showSuccessMsg();
+    updateOrderHistory(context);
     return Container(
       color: Colors.transparent,
       alignment: Alignment.center,

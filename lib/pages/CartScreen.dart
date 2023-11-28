@@ -12,7 +12,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-
   Controller controller = Controller();
 
   @override
@@ -22,6 +21,7 @@ class _CartScreenState extends State<CartScreen> {
           title: Text("Cart"),
           centerTitle: true,
           backgroundColor: Constants.primaryColor,
+          foregroundColor: Colors.white,
         ),
         body: Stack(
           children: [
@@ -59,44 +59,43 @@ class _CartScreenState extends State<CartScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-            padding: EdgeInsets.all(10),
-            width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Constants.primaryColor),
-              onPressed: () {
-                if(controller.getCartItems().isNotEmpty)
-                  Navigator.pushNamed(context, Routes.checkout_screen);
-                else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.primaryColor,
+                      foregroundColor: Colors.white),
+                  onPressed: () {
+                    if (controller.getCartItems().isNotEmpty)
+                      Navigator.pushNamed(context, Routes.checkout_screen);
+                    else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         behavior: SnackBarBehavior.floating,
                         content: Text('Your cart is empty!'),
-                      )
-                  );
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Checkout',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
+                      ));
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Checkout',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        Text(
+                          '₹ ${controller.getTotalPriceOfAllItems().toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        )
+                      ],
                     ),
-                    Text(
-                      '₹ ${controller.getTotalPriceOfAllItems().toStringAsFixed(2)}',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ),
               ),
             )
           ],
