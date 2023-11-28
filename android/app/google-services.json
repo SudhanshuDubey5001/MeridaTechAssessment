@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "232806779781",
+    "project_id": "meridatech-8c677",
+    "storage_bucket": "meridatech-8c677.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:232806779781:android:ebb5e4adec898c5450d2ec",
+        "android_client_info": {
+          "package_name": "com.example.meridatech_assessment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZoKBKheYxewAoy8saKvsBl_m78AWRoI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
