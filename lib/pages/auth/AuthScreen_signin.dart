@@ -20,6 +20,7 @@ class _AuthScreenSignInState extends State<AuthScreenSignIn> {
   TextEditingController passwordController = TextEditingController();
 
   AuthService _authService = AuthService();
+  bool isButtonPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,27 +51,53 @@ class _AuthScreenSignInState extends State<AuthScreenSignIn> {
             SizedBox(height: 32.0),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Constants.primaryColor,
-                foregroundColor: Colors.white
-              ),
-              onPressed: () async{
-                String email = emailController.text;
-                String password = passwordController.text;
+                  backgroundColor: Constants.primaryColor,
+                  foregroundColor: Colors.white),
+              onPressed: () async {
+                if (!isButtonPressed) {
+                  setState(() {
+                    isButtonPressed = true;
+                  });
+                  String email = emailController.text;
+                  String password = passwordController.text;
 
-                //apply verification logic
-                ShopUser user = await _authService.signInWithEmailPassword(email, password);
-                if(user==null) print("error signing in");
-                else print(user.uid);
+                  //apply verification logic
+                  ShopUser user = await _authService.signInWithEmailPassword(
+                      email, password);
+                  print("Result: ${user.toString()}");
+                  if (user.uid == '-1') {
+                    setState(() {
+                      isButtonPressed = false;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('Some fields are empty'),
+                    ));
+                  } else if (user.uid == '-3') {
+                    setState(() {
+                      isButtonPressed = false;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('Email or password is incorrect'),
+                    ));
+                  } else
+                    print(user.uid);
+                }
               },
-              child: Text('Sign In'),
+              child: isButtonPressed != true
+                  ? Text('Sign In')
+                  : CircularProgressIndicator(color: Colors.white,)
             ),
             SizedBox(height: 16.0),
             TextButton(
               style: TextButton.styleFrom(
-                foregroundColor: Constants.secondaryColor
-              ),
+                  foregroundColor: Constants.secondaryColor),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AuthScreenSignUp()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AuthScreenSignUp()));
               },
               child: Text('Don\'t have an account? Sign Up'),
             ),

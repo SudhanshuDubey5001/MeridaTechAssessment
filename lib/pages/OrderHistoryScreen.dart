@@ -11,16 +11,15 @@ class OrderHistoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Controller controller = Controller();
     // print(controller.getOrderHistoryItems().map((e) => e.itemName));
-    return
-      Scaffold(
+    return Scaffold(
+      backgroundColor: Constants.backgroundColor,
       appBar: AppBar(
         title: Text("Order History"),
         centerTitle: true,
         backgroundColor: Constants.primaryColor,
         foregroundColor: Colors.white,
       ),
-      body:
-      Container(
+      body: Container(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -18,6 +18,7 @@ class CartItemTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
+      surfaceTintColor: Colors.white,
       margin: EdgeInsets.all(20),
       child: Padding(
         padding: EdgeInsets.all(20),

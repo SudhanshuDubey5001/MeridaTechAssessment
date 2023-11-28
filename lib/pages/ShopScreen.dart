@@ -21,6 +21,7 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.backgroundColor,
         appBar: AppBar(
           title: Text("Shopping"),
           centerTitle: true,
