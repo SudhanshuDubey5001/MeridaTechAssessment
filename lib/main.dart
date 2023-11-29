@@ -21,15 +21,6 @@ import 'firebase_options.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   initializeFirebase();
-
-  // runApp(MaterialApp(
-  //     initialRoute: Routes.shop_screen,
-  //     routes: {
-  //       Routes.shop_screen: (context) => const ShopScreen(),
-  //       Routes.cart_screen: (context) => const CartScreen(),
-  //       Routes.checkout_screen: (context) => const CheckOutScreen(),
-  //     },
-  //   ));
 }
 
 void initializeFirebase() async {
@@ -40,7 +31,7 @@ void initializeFirebase() async {
 
   try {
     runApp(StreamProvider<ShopUser>.value(
-      value: AuthService().userStream ?? Stream.value(ShopUser(uid: "-1")),
+      value: AuthService().userStream,
       initialData: ShopUser(uid: "-1"),
       child: const MaterialApp(
         home: Wrapper(),
