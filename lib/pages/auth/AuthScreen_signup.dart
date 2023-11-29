@@ -38,7 +38,7 @@ class _AuthScreenSignUpState extends State<AuthScreenSignUp> {
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: 'Email ID'),
               keyboardType: TextInputType.emailAddress,
             ),
             SizedBox(height: 16.0),
