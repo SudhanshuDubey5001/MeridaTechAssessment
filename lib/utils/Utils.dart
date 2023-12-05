@@ -8,4 +8,9 @@ class Utils{
     DateTime now = DateTime.now();
     return "${now.day}-${now.month}-${now.year}";
   }
+
+  String getNowTime(){
+    DateTime now = DateTime.now();
+    return "${now.hour}:${now.second}";
+  }
 }

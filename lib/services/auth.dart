@@ -1,23 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:meridatech_assessment/model/ShopUser.dart';
+import 'package:meridatech_assessment/model/UserSBI.dart';
 
 import '../utils/Constants.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  ShopUser _getUserFromFirebase(User user) {
-    return ShopUser(uid: user.uid);
+  UserSBI _getUserFromFirebase(User user) {
+    return UserSBI(uid: user.uid);
   }
 
   // keep track of user is signed in or out by creating a stream
-  Stream<ShopUser> get userStream {
+  Stream<UserSBI> get userStream {
     return _auth.authStateChanges().map((User? user) =>
-        user != null ? _getUserFromFirebase(user) : ShopUser(uid: "-1"));
+        user != null ? _getUserFromFirebase(user) : UserSBI(uid: "-1"));
   }
 
   Future signInWithEmailPassword(String email, String password) async {
-    if (email == "" || password == "") return ShopUser(uid: '-1');
+    if (email == "" || password == "") return UserSBI(uid: '-1');
     try {
       final credential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -29,18 +29,22 @@ class AuthService {
       if (user != null)
         return _getUserFromFirebase(user);
       else
-        return ShopUser(uid: '-2');
+        return UserSBI(uid: '-2');
     } on FirebaseAuthException catch (e) {
-      return ShopUser(uid: '-3');
+      return UserSBI(uid: '-3');
     }
   }
 
   Future<String> createAccountWithEmailAndPassword(email, password) async {
     if (email == "" || password == "") return '-1';
     try {
-      await _auth.createUserWithEmailAndPassword(
+      final credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      return '1';
+      User? user = credential.user;
+      if (user != null)
+        return user.uid;
+      else
+        return '-2';
     } catch (e) {
       print(e.toString());
       return '-2';

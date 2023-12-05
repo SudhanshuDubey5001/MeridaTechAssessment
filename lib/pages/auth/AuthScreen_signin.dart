@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meridatech_assessment/Controller.dart';
 import 'package:meridatech_assessment/main.dart';
-import 'package:meridatech_assessment/model/ShopUser.dart';
+import 'package:meridatech_assessment/model/UserSBI.dart';
 import 'package:meridatech_assessment/pages/auth/AuthScreen_signup.dart';
 import 'package:meridatech_assessment/services/auth.dart';
+import 'package:meridatech_assessment/services/cloud_database.dart';
 import 'package:meridatech_assessment/utils/Constants.dart';
 import 'package:meridatech_assessment/utils/Routes.dart';
 
@@ -20,6 +21,7 @@ class _AuthScreenSignInState extends State<AuthScreenSignIn> {
   TextEditingController passwordController = TextEditingController();
 
   AuthService _authService = AuthService();
+  DatabaseService db = DatabaseService();
   bool isButtonPressed = false;
 
   @override
@@ -62,7 +64,7 @@ class _AuthScreenSignInState extends State<AuthScreenSignIn> {
                   String password = passwordController.text;
 
                   //apply verification logic
-                  ShopUser user = await _authService.signInWithEmailPassword(
+                  UserSBI user = await _authService.signInWithEmailPassword(
                       email, password);
                   print("Result: ${user.toString()}");
                   if (user.uid == '-1') {
@@ -81,8 +83,13 @@ class _AuthScreenSignInState extends State<AuthScreenSignIn> {
                       behavior: SnackBarBehavior.floating,
                       content: Text('Email or password is incorrect'),
                     ));
-                  } else
-                    print(user.uid);
+                  } else{
+                    print("UID === ${user.uid}");
+                    Constants.userSBI = await db.fetchUser(user.uid);
+                    print("-------Sign in screen-----");
+                    print("uid = "+Constants.userSBI.uid);
+                    print("name = "+Constants.userSBI.name);
+                  }
                 }
               },
               child: isButtonPressed != true

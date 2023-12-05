@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:meridatech_assessment/services/cloud_database.dart';
 import 'package:meridatech_assessment/utils/Constants.dart';
 
-import '../../model/ShopUser.dart';
+import '../../model/UserSBI.dart';
 import '../../services/auth.dart';
 import 'AuthScreen_signin.dart';
 
@@ -20,9 +21,11 @@ class _AuthScreenSignUpState extends State<AuthScreenSignUp> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController1 = TextEditingController();
     TextEditingController passwordController2 = TextEditingController();
-
+    TextEditingController nameController = TextEditingController();
+    TextEditingController addressController = TextEditingController();
 
     AuthService _authService = AuthService();
+    DatabaseService db = DatabaseService();
 
     return Scaffold(
       appBar: AppBar(
@@ -54,6 +57,18 @@ class _AuthScreenSignUpState extends State<AuthScreenSignUp> {
               obscureText: true,
             ),
             SizedBox(height: 32.0),
+            TextField(
+              controller: nameController,
+              decoration: InputDecoration(labelText: 'Name on Account'),
+              // obscureText: true,
+            ),
+            SizedBox(height: 32.0),
+            TextField(
+              controller: addressController,
+              decoration: InputDecoration(labelText: 'Address'),
+              // obscureText: true,
+            ),
+            SizedBox(height: 32.0),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: Constants.primaryColor,
@@ -74,9 +89,6 @@ class _AuthScreenSignUpState extends State<AuthScreenSignUp> {
                       isButtonPressed = false;
                     });
                     switch (result) {
-                      case '1':
-                        Navigator.pop(context);
-                        break;
                       case '-1':
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(
@@ -91,6 +103,13 @@ class _AuthScreenSignUpState extends State<AuthScreenSignUp> {
                           content: Text('Some error occurred'),
                         ));
                         break;
+                      default:
+                        await db.addUserDetailsToFirestore(UserSBI(
+                            uid: result,
+                            name: nameController.text,
+                            address: addressController.text));
+                        Navigator.pop(context);
+                        break;
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -103,7 +122,11 @@ class _AuthScreenSignUpState extends State<AuthScreenSignUp> {
                   }
                 }
               },
-              child: !isButtonPressed? Text('Sign Up'): CircularProgressIndicator(color: Colors.white,),
+              child: !isButtonPressed
+                  ? Text('Sign Up')
+                  : CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
             ),
             SizedBox(height: 16.0),
             TextButton(

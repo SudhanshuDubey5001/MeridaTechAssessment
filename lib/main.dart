@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meridatech_assessment/model/ShopItem.dart';
-import 'package:meridatech_assessment/model/ShopUser.dart';
+import 'package:meridatech_assessment/model/UserSBI.dart';
 import 'package:meridatech_assessment/pages/OrderHistoryScreen.dart';
 import 'package:meridatech_assessment/pages/auth/AuthScreen_signin.dart';
 import 'package:meridatech_assessment/pages/CartScreen.dart';
@@ -30,9 +30,9 @@ void initializeFirebase() async {
   print("initialized!!");
 
   try {
-    runApp(StreamProvider<ShopUser>.value(
+    runApp(StreamProvider<UserSBI>.value(
       value: AuthService().userStream,
-      initialData: ShopUser(uid: "-1"),
+      initialData: UserSBI(uid: "-1"),
       child: const MaterialApp(
         home: Wrapper(),
       ),
