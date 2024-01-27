@@ -2,6 +2,8 @@
 
 A simple shopping app made using Flutter
 
+Link to [app](https://meridatech-8c677.web.app/) 
+
 ## Details
 - **Shopping page**: Browse through the products and add it to cart.
 - **Cart page**: See your cart and manage the quantity and see total amount.
